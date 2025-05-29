@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영국 단기선교팀 기도제목</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for better readability */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .container-wrapper {
+            max-width: 4xl;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff;
+            border-radius: 1rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .container-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .container-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .container-wrapper {
+                padding: 2.5rem; /* lg:p-10 */
+            }
+        }
+
+        .person-accordion-header {
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #e0f7fa; /* Light cyan for person headers */
+            border-bottom: 1px solid #b2ebf2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #006064; /* Darker cyan text */
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .person-accordion-header:hover {
+            background-color: #b2ebf2; /* Darker on hover */
+        }
+        .person-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            padding-top: 0; /* Initial padding-top 0 */
+            padding-bottom: 0; /* Initial padding-bottom 0 */
+            border: 1px solid #e0f7fa;
+        }
+        .person-accordion-content.active {
+            max-height: 1000px; /* Sufficiently large for all prayers */
+            transition: max-height 0.5s ease-in;
+            padding-top: 1rem; /* Add padding when active */
+            padding-bottom: 1rem; /* Add padding when active */
+        }
+        .arrow {
+            transition: transform 0.3s ease-in-out;
+        }
+        .arrow.rotate {
+            transform: rotate(90deg);
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            color: #4a5568; /* Gray text for prayer points */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8 lg:p-10">
+    <div class="container-wrapper">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 text-center">
+            🇬🇧 영국 단기선교팀 기도제목
+        </h1>
+        <p class="text-gray-700 mb-8 text-center text-lg italic">
+            [막11:24] 그러므로 내가 너희에게 말하노니 무엇이든지 기도하고 구하는 것은 받은 줄로 믿으라 그리하면 너희에게 그대로 되리라🙏🏻
+        </p>
+
+        <div id="prayer-list-container">
+            </div>
+
+        <p class="text-gray-600 text-center text-sm mt-8">
+            함께 중보해 주셔서 감사합니다.
+        </p>
+    </div>
+
+    <script>
+        const prayerData = [
+            {
+                name: "박종범 선교사님",
+                prayers: [
+                    "영국에서 담석 제거 수술을 하려고 의사와 면담 중입니다. 조속히 수술을 잘 받아서, 불편함 없이 건강하게 사역할 수 있도록 기도해 주세요.",
+                    "런던열방교회가 새벽기도 장소와 금요기도회 장소를 구하고 있습니다. 현재 한인촌이 형성되어 있는 근처에서 찾기를 위해서 기도하고 있습니다(뉴몰든 지역, New Malden). 이를 위해서 기도 부탁드립니다.",
+                    "런던열방교회 교육기관 사역자가 필요합니다. 섬기던 부사역자들이 귀국 및 선교지로 파송되어서 현재 저희 부부가 섬기고 있는데, 장기적으로 교회학교를 헌신적으로 섬기며, 다음 세대를 믿음으로 세워줄 부사역자를 주님께서 조속히 보내주시도록 중보기도 부탁드립니다."
+                ]
+            },
+            {
+                name: "이석진 집사님(팀장)",
+                prayers: [
+                    "영국 단기선교팀 각 사람마다 하나님의 개인적인 만남과 인도하심이 있기를",
+                    "영국 단기선교팀 가운데, 하나님 영광 받으시고, 선교사님의 건강과 사역에 하나님의 형통하심이 함께하시길",
+                    "지금 일하는 회사가 하나님의 주권아래 일할 수 있도록 그리고 팀원들도 함께 하나님의 주권을 인정할 수 있도록",
+                    "가정과 아이들 가운데, 영적 신앙의 믿음이 자라고 예수그리스도의 사랑이 충만한 가정",
+                    "장인어른 장모님의 영혼 구원 및 믿음의 성장"
+                ]
+            },
+            {
+                name: "이서희",
+                prayers: [
+                    "선교 준비 기간 동안 더욱 기도와 말씀으로 무장될 수 있길",
+                    "주님을 더 사랑하길",
+                    "체력과 건강으로 붙들어주시길"
+                ]
+            },
+            {
+                name: "김혜인",
+                prayers: [
+                    "진로 (7월 중순 퇴사를 앞두고, 앞으로의 방향을 잘 잡을 수 있도록. 그리고 그 방향으로 나아가기 위한 준비를 착실히 할 수 있도록.)",
+                    "관계 (영국 단기선교를 앞두고 또다시 하나님과의 관계가 소원해지는 듯한데, 다시금 힘을 되찾을 수 있도록. 여러 사람들과의 관계 속에서 지치지 않도록, 잘 지속해 나갈 수 있도록.)",
+                    "가정 (부모님과 동생의 건강, 가족들이 무탈히 지낼 수 있도록. + 나의 건강)",
+                    "재정적인 부분의 안정"
+                ]
+            },
+            {
+                name: "장윤지",
+                prayers: [
+                    "하나님이 원하시는 길 찾고 순종할 수 있길",
+                    "하나님이 맡겨주신 일 지혜로 할 수 있길",
+                    "하나님 일 하는 데 필요한 것들 채워주시길"
+                ]
+            },
+            {
+                name: "최진영",
+                prayers: [
+                    "제 안에 사랑이 부족합니다. 사랑마저도 주님의 도우심 없이 할 수 없음을 고백합니다. 주님 한 분 더욱 사랑하는 마음, 나와 내 이웃 그리고 한 영혼을 사랑하는 마음을 부어주세요.",
+                    "영국을 사랑하는 하나님의 마음을 구합니다. 선교를 준비하는 모든 과정, 내 기분과 감정이 아닌 말씀대로 지켜 행 할 수 있도록 도와주세요.",
+                    "주님 보시기에 합당한 모습으로 선교팀이 협력하여 선을 이룰 수 있도록 처음부터 끝까지 함께해 주세요.",
+                    "신앙의 기초가 바로 서길 기도합니다. 기쁨으로 말씀과 기도, 찬양과 예배에 마음과 시간을 드릴 수 있도록 도와주세요.",
+                    "작은 믿음입니다. 부족한 믿음은 순종과 인내로 채워나갈 수 있도록 도와주세요."
+                ]
+            },
+            {
+                name: "박예인",
+                prayers: [
+                    "영국의 다음 세대 디아스포라를 위해",
+                    "많고 다양한 문화를 경험하며 살고 있는 디아스포라가 정체성의 혼란 중에도 하나님이 주시는 선교적인 사명을 품고 살아가길",
+                    "복음이 전해져야 하는 나라가 아니라 복음이 익숙해져서 종교 된 영국에 새로운 부흥이 오길 또 그 일에 조금이라도 참여할 수 있기에 감사",
+                    "(개인) 하나님이 찾고 원하시는 워십리더로 성장해 나가길",
+                    "한국에서 경험하고 배우는 예배를 깊이 묵상하며 남은 시간을 효율적이게 쓸 수 있길",
+                    "8월이 지나 선교 갔다 와서도 영국을 맘에 품고 계속 기도로 섬길 수 있길"
+                ]
+            },
+            {
+                name: "김나영",
+                prayers: [
+                    "선교 준비 시작부터 끝까지 선교팀이 하나 되어 협력하도록",
+                    "영적으로 흔들리지 않도록 기도와 말씀으로 무장하기",
+                    "선교지의 영혼들에게 복음의 열매 맺는 계기가 되도록",
+                    "모든 팀원들의 믿음이 더욱 견고해지도록"
+                ]
+            },
+            {
+                name: "이덕현",
+                prayers: [
+                    "영국을 사랑하는 마음을 부어주시도록",
+                    "선교사님의 건강과 가정, 그리고 모든 사역 가운데 하나님의 인도하심이 있도록",
+                    "가족 구원 및 가족 건강(부모님과 누나, 매형, 조카 모두 하나님 만나도록)",
+                    "나의 만족과 유익이 아닌 주님의 뜻에 따라 순종하며 나아가는 자 되도록",
+                    "주님의 사랑이 내 안에 넘치도록",
+                    "주님께서 나를 향해 계획하신 것들 능히 감당하도록",
+                    "배우자 기도"
+                ]
+            }
+        ];
+
+        const container = document.getElementById('prayer-list-container');
+
+        prayerData.forEach(person => {
+            const personDiv = document.createElement('div');
+            personDiv.className = 'mb-3';
+
+            const personHeader = document.createElement('div');
+            personHeader.className = 'person-accordion-header shadow-sm';
+            personHeader.innerHTML = `
+                <span class="text-lg">🍀 ${person.name}</span>
+                <svg class="arrow w-5 h-5 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            `;
+            personDiv.appendChild(personHeader);
+
+            const personContent = document.createElement('div');
+            personContent.className = 'person-accordion-content';
+            const prayerList = document.createElement('ul');
+            person.prayers.forEach(prayer => {
+                const listItem = document.createElement('li');
+                listItem.textContent = prayer;
+                prayerList.appendChild(listItem);
+            });
+            personContent.appendChild(prayerList);
+            personDiv.appendChild(personContent);
+
+            personHeader.addEventListener('click', () => {
+                personContent.classList.toggle('active');
+                personHeader.querySelector('.arrow').classList.toggle('rotate');
+            });
+
+            container.appendChild(personDiv);
+        });
+    </script>
+</body>
+</html>
