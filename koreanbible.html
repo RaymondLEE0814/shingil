@@ -54,7 +54,7 @@
 
     <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg p-6 md:p-8">
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-sky-700">� 성경으로 배우는 한국어</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-sky-700">📖 성경으로 배우는 한국어</h1>
             <p class="text-slate-600 mt-2">성경 말씀을 통해 한국어를 쉽고 재미있게 공부해 보세요.</p>
         </header>
 
@@ -201,15 +201,15 @@
                         korean: "너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라",
                         english: "in all your ways submit to him, and he will make your paths straight.",
                         vocabulary: [
-                            { key: "너는범사에", word: "너는", meaning: "you (informal)", grammar: "대명사 + 토픽 조사 '는'" }, // '범사에'와 붙어있어 파싱이 어려울 수 있음, 데이터 수정 필요
+                            { key: "너는범사에", word: "너는", meaning: "you (informal)", grammar: "대명사 + 토픽 조사 '는'" },
                             { key: "범사에", word: "범사", meaning: "all things, every matter", grammar: "명사 + 조사 '에'" },
-                            { key: "그를인정하라", word: "그를", meaning: "him", grammar: "대명사 + 목적격 조사 '를'" }, // '인정하라'와 붙어있음
+                            { key: "그를인정하라", word: "그를", meaning: "him", grammar: "대명사 + 목적격 조사 '를'" },
                             { key: "인정하라", word: "인정하다", meaning: "to acknowledge, to admit", grammar: "동사 + 명령형 어미 '-아라'" },
                             { key: "그리하면", word: "그리하면", meaning: "if so, then", grammar: "접속 부사" },
                             { key: "네길을", word: "네 길", meaning: "your path", grammar: "소유격 + 명사 + 목적격 조사 '을'" },
                             { key: "지도하시리라", word: "지도하다", meaning: "to guide, to direct", grammar: "동사 + 존칭 및 미래 추측 어미" }
                         ],
-                        korean_words_parsed: ["너는", "범사에", "그를", "인정하라", "그리하면", "네", "길을", "지도하시리라"] // 잠언 3:6은 단어 파싱이 좀 더 복잡할 수 있어, 예시로 단순화.
+                        korean_words_parsed: ["너는", "범사에", "그를", "인정하라", "그리하면", "네", "길을", "지도하시리라"]
                     }
                 }
             },
@@ -286,36 +286,43 @@
         const messageTextElem = document.getElementById('message-text');
         const messageOkBtn = document.getElementById('message-ok-btn');
         
-        let currentKoreanVerseForSpeech = ""; // 현재 선택된 한국어 구절 저장
+        let currentKoreanVerseForSpeech = ""; 
 
         // Web Speech API 관련
         const synth = window.speechSynthesis;
         let koreanVoice = null;
+        let speechApiSupported = ('speechSynthesis' in window);
 
         function loadKoreanVoice() {
+            if (!speechApiSupported) return;
+
             const voices = synth.getVoices();
+            if (voices.length === 0 && synth.onvoiceschanged === undefined) {
+                 console.warn("음성 목록을 즉시 가져올 수 없습니다. 브라우저가 Web Speech API 음성 목록을 비동기적으로 로드할 수 있습니다.");
+                 if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
+                 return;
+            }
+            
             koreanVoice = voices.find(voice => voice.lang === 'ko-KR');
             if (!koreanVoice) {
-                // 기본 한국어 음성이 없을 경우, 사용 가능한 첫 번째 한국어 음성 선택 시도
                 koreanVoice = voices.find(voice => voice.lang.startsWith('ko'));
             }
-             if (!koreanVoice && voices.length > 0) {
-                // 그래도 없으면, 그냥 첫번째 사용가능한 음성 (이 경우 발음이 이상할 수 있음)
-                // koreanVoice = voices[0]; 
-                // console.warn("Korean voice not found, using default available voice. Pronunciation might be incorrect.");
-                 console.warn("한국어 음성을 찾을 수 없습니다. 기본 음성을 사용합니다 (발음이 정확하지 않을 수 있습니다).");
-            } else if (voices.length === 0 && synth.onvoiceschanged === undefined) {
-                 // onvoiceschanged 이벤트가 지원되지 않고 즉시 voices가 비어있는 경우
-                 console.warn("음성 목록을 가져올 수 없습니다. 브라우저가 Web Speech API 음성 목록을 비동기적으로 로드할 수 있습니다.");
+
+            if (koreanVoice) {
+                console.log("한국어 음성 로드됨:", koreanVoice.name);
+                // 구절이 로드되면 speakFullVerseBtn은 loadSelectedVerse에서 보이도록 처리합니다.
+            } else {
+                 console.warn("한국어 음성을 찾을 수 없습니다. 발음 듣기 기능이 제한될 수 있습니다.");
+                 if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
+                 // 사용자에게 한 번만 알리는 것이 좋을 수 있습니다.
+                 // showMessage("음성 지원 안내", "사용 가능한 한국어 음성이 없어 발음 듣기 기능이 제한됩니다. 브라우저 또는 시스템의 음성 설정을 확인해주세요.");
             }
         }
-        // 'voiceschanged' 이벤트는 음성 목록이 로드되거나 변경될 때 발생합니다.
-        if (synth.onvoiceschanged !== undefined) {
+        
+        if (speechApiSupported && synth.onvoiceschanged !== undefined) {
             synth.onvoiceschanged = loadKoreanVoice;
         }
 
-
-        // 메시지 박스 관련 함수
         function showMessage(title, text) {
             messageTitleElem.textContent = title;
             messageTextElem.textContent = text;
@@ -326,109 +333,97 @@
             messageBox.classList.add('hidden');
         });
 
-        // 텍스트 음성 변환 함수
         function speakText(textToSpeak, lang = 'ko-KR') {
-            if (!synth) {
-                showMessage("알림", "죄송합니다. 사용자의 브라우저가 음성 합성을 지원하지 않습니다.");
+            if (!speechApiSupported || !koreanVoice) {
+                if (!speechApiSupported) {
+                    showMessage("알림", "죄송합니다. 사용자의 브라우저가 음성 합성을 지원하지 않습니다.");
+                } else {
+                    showMessage("알림", "한국어 음성을 사용할 수 없어 발음을 재생할 수 없습니다.");
+                }
                 return;
             }
             if (synth.speaking) {
-                // console.warn('SpeechSynthesisUtterance đang nói...');
-                // synth.cancel(); // 필요시 이전 발음 취소
-                return; // 이미 말하고 있으면 중복 실행 방지
+                synth.cancel(); // 이전 음성 중지
             }
 
             const utterThis = new SpeechSynthesisUtterance(textToSpeak);
-            utterThis.onend = () => {
-                // console.log('SpeechSynthesisUtterance đã nói xong.');
-            };
+            utterThis.voice = koreanVoice;
+            utterThis.lang = koreanVoice.lang; // 로드된 음성의 언어 설정 사용
+            
             utterThis.onerror = (event) => {
                 console.error('SpeechSynthesisUtterance error', event);
                 let errorMsg = "음성 변환 중 오류가 발생했습니다.";
-                if (event.error === 'no-speech') {
-                    errorMsg = "발음할 내용이 없거나 너무 짧습니다.";
-                } else if (event.error === 'language-unavailable') {
-                    errorMsg = "선택한 언어의 음성을 사용할 수 없습니다. 브라우저 설정을 확인해주세요.";
-                } else if (event.error === 'synthesis-failed') {
-                    errorMsg = "음성 합성에 실패했습니다. 네트워크 연결 또는 브라우저 설정을 확인해주세요.";
+                 if (event.error === 'synthesis-failed' || event.error === 'audio-busy' || event.error === 'audio-hardware') {
+                    errorMsg = "음성 재생에 실패했습니다. 잠시 후 다시 시도해주세요.";
+                } else if (event.error === 'language-unavailable' || event.error === 'voice-unavailable') {
+                     errorMsg = "선택한 언어의 음성을 사용할 수 없습니다.";
                 }
                 showMessage("음성 재생 오류", errorMsg);
             };
-
-            if (koreanVoice) {
-                utterThis.voice = koreanVoice;
-            } else {
-                // 한국어 음성이 명시적으로 찾아지지 않은 경우, lang 속성만 설정
-                utterThis.lang = lang;
-                console.warn(`명시적인 한국어 음성 객체를 찾지 못했습니다. lang '${lang}'으로 재생을 시도합니다.`);
-                 if (lang !== 'ko-KR') { // 만약 lang이 ko-KR이 아닌 다른 언어라면, 해당 언어로 설정
-                    utterThis.lang = lang;
-                }
-            }
-            
-            // 필요시 속도, 피치 등 조절
-            // utterThis.pitch = 1;
-            // utterThis.rate = 1;
             synth.speak(utterThis);
         }
 
-
-        // 초기화 함수
         function initializeApp() {
-            loadKoreanVoice(); // 음성 목록 미리 로드 시도
-            populateBookDropdown();
+            if (!speechApiSupported) {
+                showMessage("알림", "사용자님의 브라우저에서는 음성 듣기 기능을 지원하지 않습니다.");
+                if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
+            } else {
+                loadKoreanVoice(); // 페이지 로드 시 음성 목록 가져오기 시도
+            }
+
+            populateBookDropdown(); 
+
+            if (bookSelect.options.length > 0) {
+                bookSelect.selectedIndex = 0; 
+                onBookChange(); 
+            } else {
+                console.error("성경 책 목록을 불러오지 못했습니다.");
+                showMessage("데이터 오류", "성경 책 데이터를 불러올 수 없습니다. 페이지를 새로고침 해주세요.");
+            }
+
             bookSelect.addEventListener('change', onBookChange);
             chapterSelect.addEventListener('change', onChapterChange);
             loadVerseBtn.addEventListener('click', loadSelectedVerse);
             speakFullVerseBtn.addEventListener('click', () => {
                 if (currentKoreanVerseForSpeech) {
-                    speakText(currentKoreanVerseForSpeech, 'ko-KR');
+                    speakText(currentKoreanVerseForSpeech);
                 } else {
                     showMessage("알림", "먼저 구절을 불러와주세요.");
                 }
             });
-            
-            if (Object.keys(sampleBibleData).length > 0) {
-                onBookChange(); 
-            }
-             // Web Speech API 지원 여부 확인 (선택적)
-            if (!('speechSynthesis' in window)) {
-                showMessage("알림", "사용자님의 브라우저에서는 음성 듣기 기능을 지원하지 않습니다.");
-                speakFullVerseBtn.style.display = 'none'; // 지원 안하면 버튼 숨김
-            }
         }
 
-        // 책 드롭다운 채우기
         function populateBookDropdown() {
             const books = Object.keys(sampleBibleData);
             bookSelect.innerHTML = books.map(book => `<option value="${book}">${book}</option>`).join('');
         }
 
-        // 책 변경 시 장 드롭다운 업데이트
         function onBookChange() {
             const selectedBook = bookSelect.value;
             const chapters = Object.keys(sampleBibleData[selectedBook] || {});
             chapterSelect.innerHTML = chapters.map(chapter => `<option value="${chapter}">${chapter}</option>`).join('');
-            if (chapters.length > 0) {
+            if (chapterSelect.options.length > 0) {
+                 chapterSelect.selectedIndex = 0;
                  onChapterChange(); 
             } else {
                 verseSelect.innerHTML = '<option value="">절 없음</option>';
             }
         }
 
-        // 장 변경 시 절 드롭다운 업데이트
         function onChapterChange() {
             const selectedBook = bookSelect.value;
             const selectedChapter = chapterSelect.value;
             if (sampleBibleData[selectedBook] && sampleBibleData[selectedBook][selectedChapter]) {
                 const verses = Object.keys(sampleBibleData[selectedBook][selectedChapter] || {});
                 verseSelect.innerHTML = verses.map(verse => `<option value="${verse}">${verse}</option>`).join('');
+                 if (verseSelect.options.length > 0) {
+                    verseSelect.selectedIndex = 0;
+                }
             } else {
                  verseSelect.innerHTML = '<option value="">절 없음</option>';
             }
         }
 
-        // 선택된 구절 불러오기
         function loadSelectedVerse() {
             const book = bookSelect.value;
             const chapter = chapterSelect.value;
@@ -436,23 +431,28 @@
 
             if (!book || !chapter || !verse) {
                 showMessage("알림", "성경, 장, 절을 모두 선택해주세요.");
+                if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
                 return;
             }
 
             const verseData = sampleBibleData[book]?.[chapter]?.[verse];
 
             if (verseData) {
-                currentKoreanVerseForSpeech = verseData.korean; // 발음용 구절 저장
+                currentKoreanVerseForSpeech = verseData.korean; 
                 displayKoreanVerse(verseData.korean, verseData.korean_words_parsed || [], verseData.vocabulary);
                 englishVerseTextElem.textContent = verseData.english;
                 displayVocabulary(verseData.vocabulary);
-                speakFullVerseBtn.classList.remove('hidden'); // 구절 로드 시 발음 버튼 표시
+                if (speechApiSupported && koreanVoice) { // 음성 API 지원하고 한국어 음성 있을 때만 버튼 표시
+                    speakFullVerseBtn.classList.remove('hidden'); 
+                } else {
+                    speakFullVerseBtn.classList.add('hidden');
+                }
             } else {
                 currentKoreanVerseForSpeech = "";
                 koreanVerseTextElem.textContent = "선택한 구절을 찾을 수 없습니다.";
                 englishVerseTextElem.textContent = "Verse not found.";
                 vocabularyListElem.innerHTML = '<p class="text-slate-500">단어 정보가 없습니다.</p>';
-                speakFullVerseBtn.classList.add('hidden');
+                if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
                 showMessage("오류", "선택한 구절 데이터를 찾을 수 없습니다.");
             }
         }
@@ -472,7 +472,7 @@
                         span.textContent = wordStr;
                         span.className = 'korean-word';
                         
-                        const vocabEntry = vocabulary.find(v => v.word === wordStr || wordStr.startsWith(v.word) || v.key === wordStr); // key로도 찾도록 추가
+                        const vocabEntry = vocabulary.find(v => v.word === wordStr || wordStr.startsWith(v.word) || v.key === wordStr);
                         if (vocabEntry) {
                             span.dataset.vocabKey = vocabEntry.key;
                             span.addEventListener('click', () => { 
@@ -481,10 +481,6 @@
                         }
                         wordSpans.push(span);
                         tempText = tempText.substring(index + wordStr.length);
-                    } else {
-                        // parsedWords에 있지만 원본 텍스트에서 해당 순서로 찾을 수 없는 경우 (데이터 부정합 가능성)
-                        // 일단 텍스트 노드로 추가하거나, 오류를 로깅할 수 있습니다.
-                        // console.warn(`'${wordStr}' not found in remaining text: '${tempText}'`);
                     }
                 });
                 if (tempText.length > 0) {
@@ -530,15 +526,14 @@
                 
                 div.appendChild(textDiv);
 
-                // 단어별 발음 듣기 버튼
-                if ('speechSynthesis' in window) { // Web Speech API 지원하는 경우에만 버튼 추가
+                if (speechApiSupported && koreanVoice) { 
                     const speakIcon = document.createElement('span');
                     speakIcon.textContent = '🔈';
                     speakIcon.className = 'speak-btn';
                     speakIcon.title = `${item.word} 발음 듣기`;
                     speakIcon.addEventListener('click', (e) => {
-                        e.stopPropagation(); // 부모 div의 클릭 이벤트 방지
-                        speakText(item.word, 'ko-KR');
+                        e.stopPropagation(); 
+                        speakText(item.word);
                     });
                     div.appendChild(speakIcon);
                 }
@@ -574,4 +569,3 @@
 
 </body>
 </html>
-�
