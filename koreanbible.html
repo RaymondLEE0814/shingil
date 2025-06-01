@@ -314,8 +314,6 @@
             } else {
                  console.warn("한국어 음성을 찾을 수 없습니다. 발음 듣기 기능이 제한될 수 있습니다.");
                  if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
-                 // 사용자에게 한 번만 알리는 것이 좋을 수 있습니다.
-                 // showMessage("음성 지원 안내", "사용 가능한 한국어 음성이 없어 발음 듣기 기능이 제한됩니다. 브라우저 또는 시스템의 음성 설정을 확인해주세요.");
             }
         }
         
@@ -365,7 +363,9 @@
 
         function initializeApp() {
             if (!speechApiSupported) {
-                showMessage("알림", "사용자님의 브라우저에서는 음성 듣기 기능을 지원하지 않습니다.");
+                // 사용자의 브라우저가 음성 듣기 기능을 지원하지 않을 때 뜨는 알림을 주석 처리합니다.
+                // showMessage("알림", "사용자님의 브라우저에서는 음성 듣기 기능을 지원하지 않습니다.");
+                console.warn("사용자님의 브라우저에서는 음성 듣기 기능을 지원하지 않습니다. 관련 UI가 숨겨집니다.");
                 if(speakFullVerseBtn) speakFullVerseBtn.classList.add('hidden');
             } else {
                 loadKoreanVoice(); // 페이지 로드 시 음성 목록 가져오기 시도
