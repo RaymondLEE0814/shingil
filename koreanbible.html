@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성경으로 배우는 한국어</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nanum Gothic', 'Inter', sans-serif;
+        }
+        .highlight {
+            background-color: #fef9c3; /* Tailwind yellow-100 */
+            font-weight: bold;
+        }
+        .korean-word {
+            cursor: pointer;
+            padding: 0 2px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        .korean-word:hover {
+            background-color: #fde68a; /* Tailwind yellow-300 */
+        }
+        .vocab-item.highlighted-vocab {
+            background-color: #dbeafe; /* Tailwind blue-100 */
+            border-left: 4px solid #3b82f6; /* Tailwind blue-500 */
+        }
+        .speak-btn {
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 0.9em;
+            color: #0ea5e9; /* sky-600 */
+        }
+        .speak-btn:hover {
+            color: #0284c7; /* sky-700 */
+        }
+        #speak-full-verse-btn {
+            background-color: #f0f9ff; /* sky-50 */
+            color: #0369a1; /* sky-700 */
+            border: 1px solid #bae6fd; /* sky-200 */
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        #speak-full-verse-btn:hover {
+            background-color: #e0f2fe; /* sky-100 */
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 flex flex-col items-center min-h-screen p-4">
+
+    <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg p-6 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-sky-700">� 성경으로 배우는 한국어</h1>
+            <p class="text-slate-600 mt-2">성경 말씀을 통해 한국어를 쉽고 재미있게 공부해 보세요.</p>
+        </header>
+
+        <section id="verse-selector" class="mb-8 p-6 bg-sky-50 rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-sky-600 mb-4">구절 선택하기</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                <div>
+                    <label for="book-select" class="block text-sm font-medium text-slate-700 mb-1">성경:</label>
+                    <select id="book-select" class="w-full p-2 border border-slate-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500">
+                        </select>
+                </div>
+                <div>
+                    <label for="chapter-select" class="block text-sm font-medium text-slate-700 mb-1">장:</label>
+                    <select id="chapter-select" class="w-full p-2 border border-slate-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500">
+                        </select>
+                </div>
+                <div>
+                    <label for="verse-select" class="block text-sm font-medium text-slate-700 mb-1">절:</label>
+                    <select id="verse-select" class="w-full p-2 border border-slate-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500">
+                        </select>
+                </div>
+            </div>
+            <button id="load-verse-btn" class="mt-6 w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-150 ease-in-out">
+                구절 불러오기
+            </button>
+        </section>
+
+        <section id="verse-display-area" class="mb-8">
+            <div id="korean-verse-panel" class="p-6 bg-slate-50 rounded-lg shadow mb-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-lg font-semibold text-slate-700">한국어 성경 (Korean)</h3>
+                    <button id="speak-full-verse-btn" class="hidden">구절 전체 발음 듣기 🔈</button>
+                </div>
+                <p id="korean-verse-text" class="text-xl leading-relaxed whitespace-pre-wrap">구절을 선택해주세요.</p>
+            </div>
+
+            <div id="english-verse-panel" class="p-6 bg-slate-50 rounded-lg shadow mb-6">
+                <h3 class="text-lg font-semibold text-slate-700 mb-3">영어 번역 (English)</h3>
+                <p id="english-verse-text" class="text-md leading-relaxed text-slate-600">Select a verse to see the English translation.</p>
+            </div>
+        </section>
+
+        <section id="vocabulary-area" class="p-6 bg-sky-50 rounded-lg shadow">
+            <h3 class="text-lg font-semibold text-sky-600 mb-4">주요 단어 및 표현</h3>
+            <div id="vocabulary-list" class="space-y-3">
+                <p class="text-slate-500">구절을 불러오면 여기에 주요 단어와 표현이 표시됩니다.</p>
+                </div>
+        </section>
+
+         <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+            <div class="bg-white p-5 rounded-lg shadow-xl max-w-sm w-full mx-4">
+                <div class="text-center">
+                    <h3 id="message-title" class="text-lg font-medium leading-6 text-gray-900 mb-2">알림</h3>
+                    <p id="message-text" class="text-sm text-gray-500 mb-4">메시지 내용</p>
+                    <button id="message-ok-btn" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-150 ease-in-out w-full">
+                        확인
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 성경 데이터 샘플
+        const sampleBibleData = {
+            "창세기": { // Genesis
+                1: {
+                    1: {
+                        korean: "태초에 하나님이 천지를 창조하시니라",
+                        english: "In the beginning God created the heavens and the earth.",
+                        vocabulary: [
+                            { key: "태초에", word: "태초에", meaning: "처음에, 맨 처음에 (In the beginning)", grammar: "부사구 (Adverbial phrase)" },
+                            { key: "하나님이", word: "하나님", meaning: "God", grammar: "명사 + 주격 조사 '이' (Noun + subject particle)" },
+                            { key: "천지를", word: "천지", meaning: "하늘과 땅 (the heavens and the earth)", grammar: "명사 + 목적격 조사 '를' (Noun + object particle)" },
+                            { key: "창조하시니라", word: "창조하시다", meaning: "만들어 내다 (to create)", grammar: "동사 (Verb - formal, declarative ending)" }
+                        ],
+                        korean_words_parsed: ["태초에", "하나님이", "천지를", "창조하시니라"]
+                    }
+                }
+            },
+            "요한복음": { // John
+                3: {
+                    16: {
+                        korean: "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라",
+                        english: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
+                        vocabulary: [
+                            { key: "하나님이", word: "하나님", meaning: "God", grammar: "명사 + 주격 조사 '이'" },
+                            { key: "세상을", word: "세상", meaning: "the world", grammar: "명사 + 목적격 조사 '을'" },
+                            { key: "이처럼", word: "이처럼", meaning: "이렇게, 이와 같이 (so, in this way)", grammar: "부사 (Adverb)" },
+                            { key: "사랑하사", word: "사랑하다", meaning: "to love", grammar: "동사 활용 (Verb conjugation - connective form)" },
+                            { key: "독생자를", word: "독생자", meaning: "하나뿐인 아들 (one and only Son)", grammar: "명사 + 목적격 조사 '를'" },
+                            { key: "주셨으니", word: "주시다", meaning: "to give (honorific)", grammar: "동사 활용 (Verb conjugation - reason/cause)" },
+                            { key: "이는", word: "이는", meaning: "이것은 (this is, this means)", grammar: "대명사 + 주격 조사 '는' (Pronoun + topic particle)" },
+                            { key: "그를", word: "그", meaning: "him/her/it", grammar: "대명사 + 목적격 조사 '를'" },
+                            { key: "믿는", word: "믿다", meaning: "to believe", grammar: "동사 현재 관형사형 (Verb - present adnominal form)" },
+                            { key: "자마다", word: "자", meaning: "사람 (person), 것 (thing)", grammar: "명사 + 조사 '마다' (Noun + particle 'each/every')" },
+                            { key: "멸망하지", word: "멸망하다", meaning: "망하여 없어지다 (to perish)", grammar: "동사 + 부정 '않고' (Verb + negation)" },
+                            { key: "않고", word: "않고", meaning: "~하지 않고 (without doing, and not)", grammar: "보조 동사 (Auxiliary verb - negation connective)" },
+                            { key: "영생을", word: "영생", meaning: "영원한 생명 (eternal life)", grammar: "명사 + 목적격 조사 '을'" },
+                            { key: "얻게", word: "얻다", meaning: "가지거나 차지하다 (to get, to obtain)", grammar: "동사 + 보조 용언 '-게 하다' (Verb + auxiliary 'to make/let someone do')" },
+                            { key: "하려", word: "하려", meaning: "~하려고 (in order to, intending to)", grammar: "동사 어미 (Verb ending - intention)" },
+                            { key: "하심이라", word: "하심이라", meaning: "~하셨습니다 (formal declarative ending of '하시다')", grammar: "동사 종결 어미 (Verb final ending - formal)" }
+                        ],
+                        korean_words_parsed: ["하나님이", "세상을", "이처럼", "사랑하사", "독생자를", "주셨으니", "이는", "그를", "믿는", "자마다", "멸망하지", "않고", "영생을", "얻게", "하려", "하심이라"]
+                    }
+                }
+            },
+            "시편": { // Psalms
+                23: {
+                    1: {
+                        korean: "여호와는 나의 목자시니 내게 부족함이 없으리로다",
+                        english: "The LORD is my shepherd; I shall not want.",
+                        vocabulary: [
+                            { key: "여호와는", word: "여호와", meaning: "Jehovah, The LORD", grammar: "명사 + 토픽 조사 '는'" },
+                            { key: "나의", word: "나의", meaning: "my", grammar: "대명사 '나' + 소유격 조사 '의'" },
+                            { key: "목자시니", word: "목자", meaning: "shepherd", grammar: "명사 + 서술격 조사 '이다' 활용" },
+                            { key: "내게", word: "내게", meaning: "to me, for me", grammar: "대명사 '나' + 조사 '에게'" },
+                            { key: "부족함이", word: "부족함", meaning: "lack, want, shortage", grammar: "명사 + 주격 조사 '이'" },
+                            { key: "없으리로다", word: "없다", meaning: "to not exist, to not have", grammar: "형용사 + 미래 추측 어미 '-으리로다'" }
+                        ],
+                        korean_words_parsed: ["여호와는", "나의", "목자시니", "내게", "부족함이", "없으리로다"]
+                    }
+                }
+            },
+            "잠언": { // Proverbs
+                3: {
+                    5: {
+                        korean: "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라",
+                        english: "Trust in the LORD with all your heart and lean not on your own understanding;",
+                        vocabulary: [
+                            { key: "너는", word: "너", meaning: "you (informal)", grammar: "대명사 + 토픽 조사 '는'" },
+                            { key: "마음을", word: "마음", meaning: "heart, mind", grammar: "명사 + 목적격 조사 '을'" },
+                            { key: "다하여", word: "다하다", meaning: "to do one's best, to exhaust", grammar: "동사 활용 (connective form)" },
+                            { key: "여호와를", word: "여호와", meaning: "Jehovah, The LORD", grammar: "명사 + 목적격 조사 '를'" },
+                            { key: "신뢰하고", word: "신뢰하다", meaning: "to trust", grammar: "동사 + 연결 어미 '-고'" },
+                            { key: "네", word: "네", meaning: "your (informal)", grammar: "대명사 '너'의 소유격" },
+                            { key: "명철을", word: "명철", meaning: "understanding, wisdom", grammar: "명사 + 목적격 조사 '을'" },
+                            { key: "의지하지", word: "의지하다", meaning: "to rely on, to depend on", grammar: "동사 + '-지 말라' (prohibitive)" },
+                            { key: "말라", word: "말라", meaning: "do not", grammar: "명령형 부정 어미" }
+                        ],
+                        korean_words_parsed: ["너는", "마음을", "다하여", "여호와를", "신뢰하고", "네", "명철을", "의지하지", "말라"]
+                    },
+                    6: {
+                        korean: "너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라",
+                        english: "in all your ways submit to him, and he will make your paths straight.",
+                        vocabulary: [
+                            { key: "너는범사에", word: "너는", meaning: "you (informal)", grammar: "대명사 + 토픽 조사 '는'" }, // '범사에'와 붙어있어 파싱이 어려울 수 있음, 데이터 수정 필요
+                            { key: "범사에", word: "범사", meaning: "all things, every matter", grammar: "명사 + 조사 '에'" },
+                            { key: "그를인정하라", word: "그를", meaning: "him", grammar: "대명사 + 목적격 조사 '를'" }, // '인정하라'와 붙어있음
+                            { key: "인정하라", word: "인정하다", meaning: "to acknowledge, to admit", grammar: "동사 + 명령형 어미 '-아라'" },
+                            { key: "그리하면", word: "그리하면", meaning: "if so, then", grammar: "접속 부사" },
+                            { key: "네길을", word: "네 길", meaning: "your path", grammar: "소유격 + 명사 + 목적격 조사 '을'" },
+                            { key: "지도하시리라", word: "지도하다", meaning: "to guide, to direct", grammar: "동사 + 존칭 및 미래 추측 어미" }
+                        ],
+                        korean_words_parsed: ["너는", "범사에", "그를", "인정하라", "그리하면", "네", "길을", "지도하시리라"] // 잠언 3:6은 단어 파싱이 좀 더 복잡할 수 있어, 예시로 단순화.
+                    }
+                }
+            },
+            "마태복음": { // Matthew
+                6: {
+                    33: {
+                        korean: "그런즉 너희는 먼저 그의 나라와 그의 의를 구하라 그리하면 이 모든 것을 너희에게 더하시리라",
+                        english: "But seek first his kingdom and his righteousness, and all these things will be given to you as well.",
+                        vocabulary: [
+                            { key: "그런즉", word: "그런즉", meaning: "therefore, so then", grammar: "접속 부사"},
+                            { key: "너희는", word: "너희", meaning: "you (plural/formal)", grammar: "대명사 + 토픽 조사 '는'"},
+                            { key: "먼저", word: "먼저", meaning: "first", grammar: "부사"},
+                            { key: "그의나라와", word: "그의 나라", meaning: "his kingdom", grammar: "소유격 + 명사 + 접속 조사 '와'"},
+                            { key: "그의의를", word: "그의 의", meaning: "his righteousness", grammar: "소유격 + 명사 + 목적격 조사 '를'"},
+                            { key: "구하라", word: "구하다", meaning: "to seek, to ask for", grammar: "동사 + 명령형 어미 '-아라'"},
+                            { key: "그리하면이", word: "그리하면", meaning: "if so, then", grammar: "접속 부사"},
+                            { key: "모든것을", word: "모든 것", meaning: "all things", grammar: "관형사 + 명사 + 목적격 조사 '을'"},
+                            { key: "너희에게", word: "너희에게", meaning: "to you (plural/formal)", grammar: "대명사 + 조사 '에게'"},
+                            { key: "더하시리라", word: "더하다", meaning: "to add", grammar: "동사 + 존칭 및 미래 추측 어미"}
+                        ],
+                        korean_words_parsed: ["그런즉", "너희는", "먼저", "그의", "나라와", "그의", "의를", "구하라", "그리하면", "이", "모든", "것을", "너희에게", "더하시리라"]
+                    }
+                }
+            },
+            "빌립보서": { // Philippians
+                4: {
+                    13: {
+                        korean: "내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라",
+                        english: "I can do all this through him who gives me strength.",
+                        vocabulary: [
+                            { key: "내게능력", word: "내게", meaning: "to me", grammar: "대명사 + 조사 '에게'"},
+                            { key: "능력", word: "능력", meaning: "ability, strength, power", grammar: "명사"},
+                            { key: "주시는", word: "주시다", meaning: "to give (honorific)", grammar: "동사 + 현재 관형사형 어미 '-는'"},
+                            { key: "자안에서", word: "자 안에서", meaning: "in him who", grammar: "명사 '자' + 조사 '안에서'"},
+                            { key: "내가", word: "내가", meaning: "I", grammar: "대명사 '나' + 주격 조사 '가'"},
+                            { key: "모든것을할수", word: "모든 것을 할 수 있다", meaning: "can do all things", grammar: "관형사 + 명사 + 동사구"},
+                            { key: "있느니라", word: "있다", meaning: "to be, can", grammar: "형용사/동사 + 종결 어미 '-느니라'"}
+                        ],
+                        korean_words_parsed: ["내게", "능력", "주시는", "자", "안에서", "내가", "모든", "것을", "할", "수", "있느니라"]
+                    }
+                }
+            },
+             "로마서": { // Romans
+                8: {
+                    28: {
+                        korean: "우리가 알거니와 하나님을 사랑하는 자 곧 그의 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라",
+                        english: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+                        vocabulary: [
+                            { key: "우리가알거니와", word: "우리가 알거니와", meaning: "And we know that", grammar: "복합 표현"},
+                            { key: "하나님을사랑하는자", word: "하나님을 사랑하는 자", meaning: "those who love God", grammar: "구문"},
+                            { key: "곧그의뜻대로", word: "곧 그의 뜻대로", meaning: "who according to his purpose", grammar: "구문"},
+                            { key: "부르심을입은자들에게는", word: "부르심을 입은 자들에게는", meaning: "to those who have been called", grammar: "구문"},
+                            { key: "모든것이합력하여", word: "모든 것이 합력하여", meaning: "all things work together", grammar: "구문"},
+                            { key: "선을이루느니라", word: "선을 이루느니라", meaning: "work for the good", grammar: "구문"}
+                        ],
+                        korean_words_parsed: ["우리", "가", "알거니와", "하나님을", "사랑하는", "자", "곧", "그의", "뜻대로", "부르심을", "입은", "자들에게는", "모든", "것이", "합력하여", "선을", "이루느니라"]
+                    }
+                }
+            }
+        };
+
+        // DOM 요소 가져오기
+        const bookSelect = document.getElementById('book-select');
+        const chapterSelect = document.getElementById('chapter-select');
+        const verseSelect = document.getElementById('verse-select');
+        const loadVerseBtn = document.getElementById('load-verse-btn');
+        const koreanVerseTextElem = document.getElementById('korean-verse-text');
+        const englishVerseTextElem = document.getElementById('english-verse-text');
+        const vocabularyListElem = document.getElementById('vocabulary-list');
+        const speakFullVerseBtn = document.getElementById('speak-full-verse-btn');
+
+        const messageBox = document.getElementById('message-box');
+        const messageTitleElem = document.getElementById('message-title');
+        const messageTextElem = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+        
+        let currentKoreanVerseForSpeech = ""; // 현재 선택된 한국어 구절 저장
+
+        // Web Speech API 관련
+        const synth = window.speechSynthesis;
+        let koreanVoice = null;
+
+        function loadKoreanVoice() {
+            const voices = synth.getVoices();
+            koreanVoice = voices.find(voice => voice.lang === 'ko-KR');
+            if (!koreanVoice) {
+                // 기본 한국어 음성이 없을 경우, 사용 가능한 첫 번째 한국어 음성 선택 시도
+                koreanVoice = voices.find(voice => voice.lang.startsWith('ko'));
+            }
+             if (!koreanVoice && voices.length > 0) {
+                // 그래도 없으면, 그냥 첫번째 사용가능한 음성 (이 경우 발음이 이상할 수 있음)
+                // koreanVoice = voices[0]; 
+                // console.warn("Korean voice not found, using default available voice. Pronunciation might be incorrect.");
+                 console.warn("한국어 음성을 찾을 수 없습니다. 기본 음성을 사용합니다 (발음이 정확하지 않을 수 있습니다).");
+            } else if (voices.length === 0 && synth.onvoiceschanged === undefined) {
+                 // onvoiceschanged 이벤트가 지원되지 않고 즉시 voices가 비어있는 경우
+                 console.warn("음성 목록을 가져올 수 없습니다. 브라우저가 Web Speech API 음성 목록을 비동기적으로 로드할 수 있습니다.");
+            }
+        }
+        // 'voiceschanged' 이벤트는 음성 목록이 로드되거나 변경될 때 발생합니다.
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadKoreanVoice;
+        }
+
+
+        // 메시지 박스 관련 함수
+        function showMessage(title, text) {
+            messageTitleElem.textContent = title;
+            messageTextElem.textContent = text;
+            messageBox.classList.remove('hidden');
+        }
+
+        messageOkBtn.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+        });
+
+        // 텍스트 음성 변환 함수
+        function speakText(textToSpeak, lang = 'ko-KR') {
+            if (!synth) {
+                showMessage("알림", "죄송합니다. 사용자의 브라우저가 음성 합성을 지원하지 않습니다.");
+                return;
+            }
+            if (synth.speaking) {
+                // console.warn('SpeechSynthesisUtterance đang nói...');
+                // synth.cancel(); // 필요시 이전 발음 취소
+                return; // 이미 말하고 있으면 중복 실행 방지
+            }
+
+            const utterThis = new SpeechSynthesisUtterance(textToSpeak);
+            utterThis.onend = () => {
+                // console.log('SpeechSynthesisUtterance đã nói xong.');
+            };
+            utterThis.onerror = (event) => {
+                console.error('SpeechSynthesisUtterance error', event);
+                let errorMsg = "음성 변환 중 오류가 발생했습니다.";
+                if (event.error === 'no-speech') {
+                    errorMsg = "발음할 내용이 없거나 너무 짧습니다.";
+                } else if (event.error === 'language-unavailable') {
+                    errorMsg = "선택한 언어의 음성을 사용할 수 없습니다. 브라우저 설정을 확인해주세요.";
+                } else if (event.error === 'synthesis-failed') {
+                    errorMsg = "음성 합성에 실패했습니다. 네트워크 연결 또는 브라우저 설정을 확인해주세요.";
+                }
+                showMessage("음성 재생 오류", errorMsg);
+            };
+
+            if (koreanVoice) {
+                utterThis.voice = koreanVoice;
+            } else {
+                // 한국어 음성이 명시적으로 찾아지지 않은 경우, lang 속성만 설정
+                utterThis.lang = lang;
+                console.warn(`명시적인 한국어 음성 객체를 찾지 못했습니다. lang '${lang}'으로 재생을 시도합니다.`);
+                 if (lang !== 'ko-KR') { // 만약 lang이 ko-KR이 아닌 다른 언어라면, 해당 언어로 설정
+                    utterThis.lang = lang;
+                }
+            }
+            
+            // 필요시 속도, 피치 등 조절
+            // utterThis.pitch = 1;
+            // utterThis.rate = 1;
+            synth.speak(utterThis);
+        }
+
+
+        // 초기화 함수
+        function initializeApp() {
+            loadKoreanVoice(); // 음성 목록 미리 로드 시도
+            populateBookDropdown();
+            bookSelect.addEventListener('change', onBookChange);
+            chapterSelect.addEventListener('change', onChapterChange);
+            loadVerseBtn.addEventListener('click', loadSelectedVerse);
+            speakFullVerseBtn.addEventListener('click', () => {
+                if (currentKoreanVerseForSpeech) {
+                    speakText(currentKoreanVerseForSpeech, 'ko-KR');
+                } else {
+                    showMessage("알림", "먼저 구절을 불러와주세요.");
+                }
+            });
+            
+            if (Object.keys(sampleBibleData).length > 0) {
+                onBookChange(); 
+            }
+             // Web Speech API 지원 여부 확인 (선택적)
+            if (!('speechSynthesis' in window)) {
+                showMessage("알림", "사용자님의 브라우저에서는 음성 듣기 기능을 지원하지 않습니다.");
+                speakFullVerseBtn.style.display = 'none'; // 지원 안하면 버튼 숨김
+            }
+        }
+
+        // 책 드롭다운 채우기
+        function populateBookDropdown() {
+            const books = Object.keys(sampleBibleData);
+            bookSelect.innerHTML = books.map(book => `<option value="${book}">${book}</option>`).join('');
+        }
+
+        // 책 변경 시 장 드롭다운 업데이트
+        function onBookChange() {
+            const selectedBook = bookSelect.value;
+            const chapters = Object.keys(sampleBibleData[selectedBook] || {});
+            chapterSelect.innerHTML = chapters.map(chapter => `<option value="${chapter}">${chapter}</option>`).join('');
+            if (chapters.length > 0) {
+                 onChapterChange(); 
+            } else {
+                verseSelect.innerHTML = '<option value="">절 없음</option>';
+            }
+        }
+
+        // 장 변경 시 절 드롭다운 업데이트
+        function onChapterChange() {
+            const selectedBook = bookSelect.value;
+            const selectedChapter = chapterSelect.value;
+            if (sampleBibleData[selectedBook] && sampleBibleData[selectedBook][selectedChapter]) {
+                const verses = Object.keys(sampleBibleData[selectedBook][selectedChapter] || {});
+                verseSelect.innerHTML = verses.map(verse => `<option value="${verse}">${verse}</option>`).join('');
+            } else {
+                 verseSelect.innerHTML = '<option value="">절 없음</option>';
+            }
+        }
+
+        // 선택된 구절 불러오기
+        function loadSelectedVerse() {
+            const book = bookSelect.value;
+            const chapter = chapterSelect.value;
+            const verse = verseSelect.value;
+
+            if (!book || !chapter || !verse) {
+                showMessage("알림", "성경, 장, 절을 모두 선택해주세요.");
+                return;
+            }
+
+            const verseData = sampleBibleData[book]?.[chapter]?.[verse];
+
+            if (verseData) {
+                currentKoreanVerseForSpeech = verseData.korean; // 발음용 구절 저장
+                displayKoreanVerse(verseData.korean, verseData.korean_words_parsed || [], verseData.vocabulary);
+                englishVerseTextElem.textContent = verseData.english;
+                displayVocabulary(verseData.vocabulary);
+                speakFullVerseBtn.classList.remove('hidden'); // 구절 로드 시 발음 버튼 표시
+            } else {
+                currentKoreanVerseForSpeech = "";
+                koreanVerseTextElem.textContent = "선택한 구절을 찾을 수 없습니다.";
+                englishVerseTextElem.textContent = "Verse not found.";
+                vocabularyListElem.innerHTML = '<p class="text-slate-500">단어 정보가 없습니다.</p>';
+                speakFullVerseBtn.classList.add('hidden');
+                showMessage("오류", "선택한 구절 데이터를 찾을 수 없습니다.");
+            }
+        }
+        
+        function displayKoreanVerse(koreanText, parsedWords, vocabulary) {
+            koreanVerseTextElem.innerHTML = ''; 
+            if (parsedWords && parsedWords.length > 0) {
+                let tempText = koreanText;
+                const wordSpans = [];
+                parsedWords.forEach(wordStr => {
+                    const index = tempText.indexOf(wordStr);
+                    if (index !== -1) {
+                        if (index > 0) {
+                            wordSpans.push(document.createTextNode(tempText.substring(0, index)));
+                        }
+                        const span = document.createElement('span');
+                        span.textContent = wordStr;
+                        span.className = 'korean-word';
+                        
+                        const vocabEntry = vocabulary.find(v => v.word === wordStr || wordStr.startsWith(v.word) || v.key === wordStr); // key로도 찾도록 추가
+                        if (vocabEntry) {
+                            span.dataset.vocabKey = vocabEntry.key;
+                            span.addEventListener('click', () => { 
+                                handleKoreanWordClick(span, vocabEntry.key);
+                            });
+                        }
+                        wordSpans.push(span);
+                        tempText = tempText.substring(index + wordStr.length);
+                    } else {
+                        // parsedWords에 있지만 원본 텍스트에서 해당 순서로 찾을 수 없는 경우 (데이터 부정합 가능성)
+                        // 일단 텍스트 노드로 추가하거나, 오류를 로깅할 수 있습니다.
+                        // console.warn(`'${wordStr}' not found in remaining text: '${tempText}'`);
+                    }
+                });
+                if (tempText.length > 0) {
+                    wordSpans.push(document.createTextNode(tempText));
+                }
+                wordSpans.forEach(el => koreanVerseTextElem.appendChild(el));
+
+            } else {
+                koreanVerseTextElem.textContent = koreanText;
+            }
+        }
+
+        function displayVocabulary(vocabularyItems) {
+            vocabularyListElem.innerHTML = ''; 
+            if (!vocabularyItems || vocabularyItems.length === 0) {
+                vocabularyListElem.innerHTML = '<p class="text-slate-500">이 구절에 대한 주요 단어 정보가 아직 없습니다.</p>';
+                return;
+            }
+
+            vocabularyItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'vocab-item p-3 bg-white border border-slate-200 rounded-md shadow-sm flex justify-between items-center';
+                div.dataset.vocabKey = item.key; 
+
+                const textDiv = document.createElement('div');
+
+                const wordStrong = document.createElement('strong');
+                wordStrong.className = 'text-sky-700';
+                wordStrong.textContent = item.word;
+                textDiv.appendChild(wordStrong);
+
+                if (item.grammar) {
+                    const grammarSpan = document.createElement('span');
+                    grammarSpan.className = 'text-xs text-slate-500 ml-2';
+                    grammarSpan.textContent = `(${item.grammar})`;
+                    textDiv.appendChild(grammarSpan);
+                }
+                
+                const meaningP = document.createElement('p');
+                meaningP.className = 'text-sm text-slate-600 mt-1';
+                meaningP.textContent = item.meaning;
+                textDiv.appendChild(meaningP);
+                
+                div.appendChild(textDiv);
+
+                // 단어별 발음 듣기 버튼
+                if ('speechSynthesis' in window) { // Web Speech API 지원하는 경우에만 버튼 추가
+                    const speakIcon = document.createElement('span');
+                    speakIcon.textContent = '🔈';
+                    speakIcon.className = 'speak-btn';
+                    speakIcon.title = `${item.word} 발음 듣기`;
+                    speakIcon.addEventListener('click', (e) => {
+                        e.stopPropagation(); // 부모 div의 클릭 이벤트 방지
+                        speakText(item.word, 'ko-KR');
+                    });
+                    div.appendChild(speakIcon);
+                }
+                
+                vocabularyListElem.appendChild(div);
+            });
+        }
+
+        let lastHighlightedWord = null;
+        let lastHighlightedVocab = null;
+
+        function handleKoreanWordClick(wordElement, vocabKey) {
+            if (lastHighlightedWord) {
+                lastHighlightedWord.classList.remove('highlight');
+            }
+            if (lastHighlightedVocab) {
+                lastHighlightedVocab.classList.remove('highlighted-vocab');
+            }
+
+            wordElement.classList.add('highlight');
+            lastHighlightedWord = wordElement;
+
+            const vocabItemToHighlight = vocabularyListElem.querySelector(`.vocab-item[data-vocab-key="${vocabKey}"]`);
+            if (vocabItemToHighlight) {
+                vocabItemToHighlight.classList.add('highlighted-vocab');
+                vocabItemToHighlight.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                lastHighlightedVocab = vocabItemToHighlight;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+
+</body>
+</html>
+�
