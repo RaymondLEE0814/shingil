@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사영리 영어 전달 연습 가이드 (영어 성구 및 음성 포함)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+        .card-icon {
+            font-size: 3rem;
+            line-height: 1;
+        }
+        .verse-content {
+            background-color: #f9fafb; /* Light gray background for verses */
+            border-left: 4px solid #4f46e5; /* Indigo border */
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            border-radius: 0.25rem;
+        }
+        .verse-korean {
+            margin-bottom: 0.5rem;
+        }
+        .verse-english {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #374151; /* gray-700 */
+        }
+        .speak-btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem; /* text-xs */
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-sky-100 to-indigo-200 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl p-6 md:p-10">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-indigo-700">사영리 쉽게 전달하기</h1>
+            <p class="text-gray-600 mt-2 text-lg">영국 현지인에게 복음을 전하기 위한 연습 도우미 (영어 성구/음성 포함)</p>
+        </header>
+
+        <div class="space-y-8">
+            <div class="bg-sky-50 p-6 rounded-lg shadow-lg border border-sky-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-red-500 mb-4 md:mb-0 md:mr-6">❤️</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-sky-700 mb-2">제1원리: 하나님의 사랑과 계획</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>핵심 메시지 (한국어):</strong> 하나님은 당신을 사랑하시며, 당신을 위한 놀라운 계획을 가지고 계십니다.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>이렇게 말해보세요 (Simple English):</strong></p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-xl text-gray-800">"God loves you."</p>
+                                <button onclick="speakText('God loves you')" class="ml-2 px-3 py-1 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl text-gray-800">"God has a wonderful plan for your life."</p>
+                                <button onclick="speakText('God has a wonderful plan for your life')" class="ml-2 px-3 py-1 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleVerse('verse1', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">관련 성구 보기/숨기기 <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse1" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">요한복음 3:16 (John 3:16)</p>
+                                <p class="verse-korean">"하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."</p>
+                                    <button onclick="speakText('For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.')" class="speak-btn-small bg-sky-400 text-white rounded hover:bg-sky-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                            <div class="verse-content mt-2">
+                                <p class="font-semibold">예레미야 29:11 (Jeremiah 29:11)</p>
+                                <p class="verse-korean">"여호와의 말씀이니라 너희를 향한 나의 생각을 내가 아나니 평안이요 재앙이 아니니라 너희에게 미래와 희망을 주는 것이니라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."</p>
+                                    <button onclick="speakText('For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.')" class="speak-btn-small bg-sky-400 text-white rounded hover:bg-sky-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                             <div class="verse-content mt-2">
+                                <p class="font-semibold">요한복음 10:10 (John 10:10)</p>
+                                <p class="verse-korean">"도둑이 오는 것은 도둑질하고 죽이고 멸망시키려는 것뿐이요 내가 온 것은 양으로 생명을 얻게 하고 더 풍성히 얻게 하려는 것이라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"The thief cometh not, but for to steal, and to kill, and to destroy: I am come that they might have life, and that they might have it more abundantly."</p>
+                                    <button onclick="speakText('The thief cometh not, but for to steal, and to kill, and to destroy: I am come that they might have life, and that they might have it more abundantly.')" class="speak-btn-small bg-sky-400 text-white rounded hover:bg-sky-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 p-6 rounded-lg shadow-lg border border-amber-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-gray-600 mb-4 md:mb-0 md:mr-6">🚧</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-amber-700 mb-2">제2원리: 죄와 분리</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>핵심 메시지 (한국어):</strong> 사람은 죄 때문에 하나님과 멀어졌어요. 그래서 하나님의 사랑과 계획을 알 수도, 경험할 수도 없어요.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>이렇게 말해보세요 (Simple English):</strong></p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-xl text-gray-800">"All people have sin."</p>
+                                <button onclick="speakText('All people have sin')" class="ml-2 px-3 py-1 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl text-gray-800">"Sin separates us from God."</p>
+                                <button onclick="speakText('Sin separates us from God')" class="ml-2 px-3 py-1 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleVerse('verse2', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">관련 성구 보기/숨기기 <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse2" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">로마서 3:23 (Romans 3:23)</p>
+                                <p class="verse-korean">"모든 사람이 죄를 범하였으매 하나님의 영광에 이르지 못하더니"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"For all have sinned, and come short of the glory of God;"</p>
+                                    <button onclick="speakText('For all have sinned, and come short of the glory of God;')" class="speak-btn-small bg-amber-400 text-white rounded hover:bg-amber-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                            <div class="verse-content mt-2">
+                                <p class="font-semibold">로마서 6:23 (Romans 6:23)</p>
+                                <p class="verse-korean">"죄의 삯은 사망이요 하나님의 은사는 그리스도 예수 우리 주 안에 있는 영생이니라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord."</p>
+                                    <button onclick="speakText('For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord.')" class="speak-btn-small bg-amber-400 text-white rounded hover:bg-amber-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-emerald-50 p-6 rounded-lg shadow-lg border border-emerald-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-green-600 mb-4 md:mb-0 md:mr-6">✝️</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-emerald-700 mb-2">제3원리: 예수 그리스도, 유일한 길</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>핵심 메시지 (한국어):</strong> 예수 그리스도만이 사람의 죄를 해결할 수 있는 하나님의 유일한 길입니다. 그분을 통해 당신은 하나님의 사랑과 계획을 알고 경험할 수 있습니다.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>이렇게 말해보세요 (Simple English):</strong></p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-xl text-gray-800">"Jesus Christ is God's only Son."</p>
+                                <button onclick="speakText('Jesus Christ is God\'s only Son')" class="ml-2 px-3 py-1 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-xl text-gray-800">"Jesus died for our sins and rose again."</p>
+                                <button onclick="speakText('Jesus died for our sins and rose again')" class="ml-2 px-3 py-1 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl text-gray-800">"He is the way to God."</p>
+                                <button onclick="speakText('He is the way to God')" class="ml-2 px-3 py-1 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleVerse('verse3', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">관련 성구 보기/숨기기 <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse3" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">로마서 5:8 (Romans 5:8)</p>
+                                <p class="verse-korean">"우리가 아직 죄인 되었을 때에 그리스도께서 우리를 위하여 죽으심으로 하나님께서 우리에 대한 자기의 사랑을 확증하셨느니라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us."</p>
+                                    <button onclick="speakText('But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us.')" class="speak-btn-small bg-emerald-400 text-white rounded hover:bg-emerald-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                            <div class="verse-content mt-2">
+                                <p class="font-semibold">요한복음 14:6 (John 14:6)</p>
+                                <p class="verse-korean">"예수께서 이르시되 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me."</p>
+                                    <button onclick="speakText('Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me.')" class="speak-btn-small bg-emerald-400 text-white rounded hover:bg-emerald-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                            <div class="verse-content mt-2">
+                                <p class="font-semibold">고린도전서 15:3-4 (1 Corinthians 15:3-4)</p>
+                                <p class="verse-korean">"내가 받은 것을 먼저 너희에게 전하였노니 이는 성경대로 그리스도께서 우리 죄를 위하여 죽으시고 장사 지낸 바 되셨다가 성경대로 사흘 만에 다시 살아나사"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"For I delivered unto you first of all that which I also received, how that Christ died for our sins according to the scriptures; And that he was buried, and that he rose again the third day according to the scriptures:"</p>
+                                    <button onclick="speakText('For I delivered unto you first of all that which I also received, how that Christ died for our sins according to the scriptures; And that he was buried, and that he rose again the third day according to the scriptures:')" class="speak-btn-small bg-emerald-400 text-white rounded hover:bg-emerald-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-violet-50 p-6 rounded-lg shadow-lg border border-violet-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-violet-600 mb-4 md:mb-0 md:mr-6">🎁</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-violet-700 mb-2">제4원리: 개인적인 영접</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>핵심 메시지 (한국어):</strong> 우리는 각자 예수 그리스도를 개인의 구주와 주님으로 영접해야 합니다. 그러면 하나님의 사랑과 계획을 알고 경험할 수 있습니다.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>이렇게 말해보세요 (Simple English):</strong></p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-xl text-gray-800">"We must receive Jesus into our hearts."</p>
+                                <button onclick="speakText('We must receive Jesus into our hearts')" class="ml-2 px-3 py-1 bg-violet-500 text-white rounded-md hover:bg-violet-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-xl text-gray-800">"Like receiving a gift."</p>
+                                <button onclick="speakText('Like receiving a gift')" class="ml-2 px-3 py-1 bg-violet-500 text-white rounded-md hover:bg-violet-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl text-gray-800">"Would you like to receive Jesus?"</p>
+                                <button onclick="speakText('Would you like to receive Jesus?')" class="ml-2 px-3 py-1 bg-violet-500 text-white rounded-md hover:bg-violet-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> 듣기</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleVerse('verse4', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">관련 성구 보기/숨기기 <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse4" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">요한복음 1:12 (John 1:12)</p>
+                                <p class="verse-korean">"영접하는 자 곧 그 이름을 믿는 자들에게는 하나님의 자녀가 되는 권세를 주셨으니"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name:"</p>
+                                    <button onclick="speakText('But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name:')" class="speak-btn-small bg-violet-400 text-white rounded hover:bg-violet-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                            <div class="verse-content mt-2">
+                                <p class="font-semibold">에베소서 2:8-9 (Ephesians 2:8-9)</p>
+                                <p class="verse-korean">"너희는 그 은혜에 의하여 믿음으로 말미암아 구원을 받았으니 이것은 너희에게서 난 것이 아니요 하나님의 선물이라 행위에서 난 것이 아니니 이는 누구든지 자랑하지 못하게 함이라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast."</p>
+                                    <button onclick="speakText('For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.')" class="speak-btn-small bg-violet-400 text-white rounded hover:bg-violet-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                            <div class="verse-content mt-2">
+                                <p class="font-semibold">요한계시록 3:20 (Revelation 3:20)</p>
+                                <p class="verse-korean">"볼지어다 내가 문 밖에 서서 두드리노니 누구든지 내 음성을 듣고 문을 열면 내가 그에게로 들어가 그와 더불어 먹고 그는 나와 더불어 먹으리라"</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="verse-english">"Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him, and will sup with him, and he with me."</p>
+                                    <button onclick="speakText('Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him, and will sup with him, and he with me.')" class="speak-btn-small bg-violet-400 text-white rounded hover:bg-violet-500 flex items-center"><i class="fas fa-volume-up mr-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-10 pt-6 border-t border-gray-300">
+            <p class="text-gray-600 text-sm">이 자료를 통해 자신감을 가지고 복음을 전해보세요!</p>
+            <p class="text-xs text-gray-400 mt-2">The Four Spiritual Laws ©1965, 2022 Bright Media Foundation. All rights reserved. Font Awesome Free 6.0.0-beta3 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License). Bible verses are from the Korean Revised Version and King James Version.</p>
+        </footer>
+    </div>
+
+    <script>
+        function speakText(text, lang = 'en-GB') { // 영국식 영어(en-GB)로 설정
+            if ('speechSynthesis' in window) {
+                // 음성 합성이 진행 중이면 취소
+                if (window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel();
+                }
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                
+                let voices = window.speechSynthesis.getVoices();
+                if (voices.length > 0) {
+                    let targetVoice = voices.find(voice => voice.lang === lang); // 지정된 언어 우선
+                     if (!targetVoice && lang === 'en-GB') { // en-GB 음성이 없을 경우 en-US 시도
+                        targetVoice = voices.find(voice => voice.lang === 'en-US');
+                     }
+                     if (!targetVoice) { // 그래도 없으면 첫번째 영어 음성 (en-GB, en-US 등)
+                        targetVoice = voices.find(voice => voice.lang.startsWith('en-'));
+                     }
+                     if (!targetVoice) { // 그것도 없으면 기본 음성
+                        targetVoice = voices.find(voice => voice.default);
+                     }
+                    utterance.voice = targetVoice;
+                } else {
+                     window.speechSynthesis.onvoiceschanged = () => {
+                        voices = window.speechSynthesis.getVoices();
+                        let targetVoice = voices.find(voice => voice.lang === lang);
+                        if (!targetVoice && lang === 'en-GB') {
+                           targetVoice = voices.find(voice => voice.lang === 'en-US');
+                        }
+                        if (!targetVoice) {
+                           targetVoice = voices.find(voice => voice.lang.startsWith('en-'));
+                        }
+                        if (!targetVoice) {
+                           targetVoice = voices.find(voice => voice.default);
+                        }
+                        utterance.voice = targetVoice;
+                     };
+                }
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                // SpeechSynthesis API 미지원 브라우저 알림 (커스텀 모달 등으로 대체 가능)
+                const notificationId = 'speech-api-notice';
+                if (document.getElementById(notificationId)) return; // 이미 알림이 있으면 중복 생성 방지
+
+                const notification = document.createElement('div');
+                notification.id = notificationId;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.left = '50%';
+                notification.style.transform = 'translateX(-50%)';
+                notification.style.padding = '10px 20px';
+                notification.style.backgroundColor = '#ef4444'; // red-500
+                notification.style.color = 'white';
+                notification.style.borderRadius = '8px';
+                notification.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                notification.style.zIndex = '1000';
+                notification.textContent = '죄송합니다. 이 브라우저에서는 음성 기능을 지원하지 않습니다.';
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    const el = document.getElementById(notificationId);
+                    if (el) document.body.removeChild(el);
+                }, 3000);
+            }
+        }
+
+        function toggleVerse(verseId, buttonElement) {
+            const verseElement = document.getElementById(verseId);
+            const iconElement = buttonElement.querySelector('i');
+            if (verseElement) {
+                verseElement.classList.toggle('hidden');
+                if (verseElement.classList.contains('hidden')) {
+                    iconElement.classList.remove('rotate-180');
+                } else {
+                    iconElement.classList.add('rotate-180');
+                }
+            }
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices(); 
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices(); 
+                };
+            }
+        }
+    </script>
+</body>
+</html>
