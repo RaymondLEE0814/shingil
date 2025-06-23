@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Four Spiritual Laws: English-Amharic Practice Tool (Debugging)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .amharic-text {
+            font-family: 'Noto Sans Ethiopic', sans-serif;
+            font-size: 1.25rem; /* Larger font for Amharic script */
+        }
+        .card-icon {
+            font-size: 3rem;
+            line-height: 1;
+        }
+        .verse-content {
+            background-color: #f9fafb; /* Light gray background for verses */
+            border-left: 4px solid #4f46e5; /* Indigo border */
+            padding: 1rem;
+            margin-top: 0.75rem;
+            border-radius: 0.25rem;
+        }
+        .verse-english {
+            margin-bottom: 0.75rem;
+            font-style: italic;
+            color: #374151; /* gray-700 */
+        }
+        .verse-amharic-container {
+            margin-top: 0.5rem;
+        }
+        .speak-btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem; /* text-xs */
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-100 via-yellow-100 to-red-100 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl p-6 md:p-10">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">The Four Spiritual Laws</h1>
+            <p class="text-gray-600 mt-2 text-lg">An English-Amharic tool for sharing the Gospel in Ethiopia</p>
+        </header>
+
+        <div class="space-y-8">
+            <!-- Principle 1 -->
+            <div class="bg-sky-50 p-6 rounded-lg shadow-lg border border-sky-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-red-500 mb-4 md:mb-0 md:mr-6">❤️</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-sky-700 mb-2">Principle 1: God's Love & Plan</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>Core Message:</strong> God loves you and offers a wonderful plan for your life.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>Try saying this (Amharic):</strong></p>
+                            <div class="flex items-center justify-between">
+                                <p class="amharic-text text-gray-800">እግዚአብሔር ይወድሃል</p>
+                                <button onclick="speakText('እግዚአብሔር ይወድሃል', 'am')" class="ml-2 px-3 py-1 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                             <p class="text-sm text-gray-500 mb-2">(egzi'ābiḥēr yewedihal - God loves you)</p>
+                            <div class="flex items-center justify-between">
+                                <p class="amharic-text text-gray-800">ለህይወትህ አስደናቂ እቅድ አለው</p>
+                                <button onclick="speakText('ለህይወትህ አስደናቂ እቅድ አለው', 'am')" class="ml-2 px-3 py-1 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                            <p class="text-sm text-gray-500">(le-hiwoteh āšedenak'ī ik'idi ālewi - He has a wonderful plan for your life)</p>
+                        </div>
+                        <button onclick="toggleVerse('verse1', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">Show/Hide Verses <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse1" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">John 3:16</p>
+                                <p class="verse-english">"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."</p>
+                                <div class="verse-amharic-container flex items-start justify-between">
+                                    <p class="amharic-text">"በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።"</p>
+                                    <button onclick="speakText('በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።', 'am')" class="speak-btn-small bg-sky-400 text-white rounded hover:bg-sky-500 flex items-center"><i class="fas fa-volume-up"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Principle 2 -->
+            <div class="bg-amber-50 p-6 rounded-lg shadow-lg border border-amber-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-gray-600 mb-4 md:mb-0 md:mr-6">🚧</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-amber-700 mb-2">Principle 2: Man's Sin & Separation</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>Core Message:</strong> Man is sinful and separated from God. Therefore, he cannot know and experience God’s love and plan for his life.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                             <p class="text-lg font-medium text-indigo-600 mb-2"><strong>Try saying this (Amharic):</strong></p>
+                            <div class="flex items-center justify-between">
+                                <p class="amharic-text text-gray-800">ሰው ሁሉ ኃጢአትን ሠርቷል</p>
+                                <button onclick="speakText('ሰው ሁሉ ኃጢአትን ሠርቷል', 'am')" class="ml-2 px-3 py-1 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-2">(sewi hulu ḫāt'ī'ātini šerituali - All people have sinned)</p>
+                            <div class="flex items-center justify-between">
+                                <p class="amharic-text text-gray-800">ኃጢአት ከእግዚአብሔር ይለየናል</p>
+                                <button onclick="speakText('ኃጢአት ከእግዚአብሔር ይለየናል', 'am')" class="ml-2 px-3 py-1 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                            <p class="text-sm text-gray-500">(ḫāt'ī'āti ke-egzi'ābiḥēr yileyenali - Sin separates us from God)</p>
+                        </div>
+                        <button onclick="toggleVerse('verse2', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">Show/Hide Verses <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse2" class="hidden mt-2">
+                             <div class="verse-content">
+                                <p class="font-semibold">Romans 3:23</p>
+                                <p class="verse-english">"For all have sinned, and come short of the glory of God;"</p>
+                                <div class="verse-amharic-container flex items-start justify-between">
+                                    <p class="amharic-text">"ሁሉ ኃጢአትን ሠርተዋልና የእግዚአብሔርም ክብር ጎድሎአቸዋል፤"</p>
+                                    <button onclick="speakText('ሁሉ ኃጢአትን ሠርተዋልና የእግዚአብሔርም ክብር ጎድሎአቸዋል፤', 'am')" class="speak-btn-small bg-amber-400 text-white rounded hover:bg-amber-500 flex items-center"><i class="fas fa-volume-up"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Principle 3 -->
+            <div class="bg-emerald-50 p-6 rounded-lg shadow-lg border border-emerald-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-green-600 mb-4 md:mb-0 md:mr-6">✝️</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-emerald-700 mb-2">Principle 3: God's Remedy</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>Core Message:</strong> Jesus Christ is God's ONLY provision for man's sin. Through Him you can know and experience God's love and plan for your life.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>Try saying this (Amharic):</strong></p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="amharic-text text-gray-800">ኢየሱስ ስለ ኃጢአታችን ሞቷል</p>
+                                <button onclick="speakText('ኢየሱስ ስለ ኃጢአታችን ሞቷል', 'am')" class="ml-2 px-3 py-1 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="amharic-text text-gray-800">እርሱ ወደ እግዚአብሔር የሚወስድ ብቸኛ መንገድ ነው</p>
+                                <button onclick="speakText('እርሱ ወደ እግዚአብሔር የሚወስድ ብቸኛ መንገድ ነው', 'am')" class="ml-2 px-3 py-1 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleVerse('verse3', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">Show/Hide Verses <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse3" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">John 14:6</p>
+                                <p class="verse-english">"Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me."</p>
+                                <div class="verse-amharic-container flex items-start justify-between">
+                                    <p class="amharic-text">"ኢየሱስም፦ እኔ መንገድና እውነት ሕይወትም ነኝ፤ በእኔ በቀር ወደ አብ የሚመጣ የለም።"</p>
+                                    <button onclick="speakText('ኢየሱስም፦ እኔ መንገድና እውነት ሕይወትም ነኝ፤ በእኔ በቀር ወደ አብ የሚመጣ የለም።', 'am')" class="speak-btn-small bg-emerald-400 text-white rounded hover:bg-emerald-500 flex items-center"><i class="fas fa-volume-up"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Principle 4 -->
+            <div class="bg-violet-50 p-6 rounded-lg shadow-lg border border-violet-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start">
+                    <div class="card-icon text-violet-600 mb-4 md:mb-0 md:mr-6">🎁</div>
+                    <div class="text-center md:text-left w-full">
+                        <h2 class="text-2xl font-semibold text-violet-700 mb-2">Principle 4: Our Response</h2>
+                        <p class="text-gray-700 mb-3 text-base">
+                            <strong>Core Message:</strong> We must individually receive Jesus Christ as Savior and Lord; then we can know and experience God’s love and plan for our lives.
+                        </p>
+                        <div class="bg-white p-4 rounded-md shadow-inner border border-gray-200">
+                            <p class="text-lg font-medium text-indigo-600 mb-2"><strong>Try saying this (Amharic):</strong></p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="amharic-text text-gray-800">ኢየሱስን መቀበል አለብን</p>
+                                <button onclick="speakText('ኢየሱስን መቀበል አለብን', 'am')" class="ml-2 px-3 py-1 bg-violet-500 text-white rounded-md hover:bg-violet-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="amharic-text text-gray-800">ኢየሱስን መቀበል ትፈልጋለህ?</p>
+                                <button onclick="speakText('ኢየሱስን መቀበል ትፈልጋለህ?', 'am')" class="ml-2 px-3 py-1 bg-violet-500 text-white rounded-md hover:bg-violet-600 transition-colors text-sm flex items-center"><i class="fas fa-volume-up mr-1"></i> Listen</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleVerse('verse4', this)" class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 font-medium">Show/Hide Verses <i class="fas fa-chevron-down ml-1 transform transition-transform"></i></button>
+                        <div id="verse4" class="hidden mt-2">
+                            <div class="verse-content">
+                                <p class="font-semibold">John 1:12</p>
+                                <p class="verse-english">"But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name:"</p>
+                                <div class="verse-amharic-container flex items-start justify-between">
+                                    <p class="amharic-text">"ለተቀበሉት ሁሉ ግን፥ በስሙ ለሚያምኑት ለእነርሱ የእግዚአብሔር ልጆች ይሆኑ ዘንድ ሥልጣንን ሰጣቸው።"</p>
+                                    <button onclick="speakText('ለተቀበሉት ሁሉ ግን፥ በስሙ ለሚያምኑት ለእነርሱ የእግዚአብሔር ልጆች ይሆኑ ዘንድ ሥልጣንን ሰጣቸው።', 'am')" class="speak-btn-small bg-violet-400 text-white rounded hover:bg-violet-500 flex items-center"><i class="fas fa-volume-up"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-10 pt-6 border-t border-gray-300">
+            <p class="text-gray-600 text-sm">Use this tool to practice and confidently share the Good News!</p>
+            <p class="text-xs text-gray-400 mt-2">The Four Spiritual Laws ©1965, 2022 Bright Media Foundation. All rights reserved. Bible verses are from the King James Version and the Amharic Bible (1962 version).</p>
+        </footer>
+    </div>
+
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        // Function to show a temporary notification on the screen
+        function showNotification(message, duration = 3000) {
+            const notificationId = 'voice-notification';
+            // Remove existing notification if it exists
+            const oldNotification = document.getElementById(notificationId);
+            if (oldNotification) {
+                oldNotification.remove();
+            }
+
+            const notification = document.createElement('div');
+            notification.id = notificationId;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.padding = '10px 20px';
+            notification.style.backgroundColor = '#ef4444'; // Red color for notice
+            notification.style.color = 'white';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            notification.style.zIndex = '1000';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.remove();
+            }, duration);
+        }
+
+        // Function to load and populate the list of available voices
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        // Load voices initially and set up a listener for when they change
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+        loadVoices(); // Initial call
+
+        // Main function to speak the text
+        function speakText(text, lang = 'am') {
+            if (!synth) {
+                showNotification('Sorry, your browser does not support the voice feature.');
+                return;
+            }
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            
+            // Ensure voices are loaded before trying to speak
+            if(voices.length === 0) {
+                loadVoices();
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+
+            // Find a specific voice for the requested language
+            let targetVoice = voices.find(voice => voice.lang.startsWith(lang)); // e.g., 'am' or 'am-ET'
+
+            if (targetVoice) {
+                utterance.voice = targetVoice;
+            } else {
+                // If Amharic voice not found, notify user and use a default voice
+                showNotification('Amharic voice not found. Using default.');
+                // Fallback to a default English voice or system default
+                utterance.voice = voices.find(voice => voice.lang.startsWith('en')) || voices.find(voice => voice.default);
+            }
+            
+            // If still no voice, cannot speak
+            if (!utterance.voice) {
+                 showNotification('No suitable voice found to speak.');
+                 return;
+            }
+
+            synth.speak(utterance);
+        }
+
+        function toggleVerse(verseId, buttonElement) {
+            const verseElement = document.getElementById(verseId);
+            const iconElement = buttonElement.querySelector('i');
+            if (verseElement) {
+                verseElement.classList.toggle('hidden');
+                if (verseElement.classList.contains('hidden')) {
+                    iconElement.classList.remove('rotate-180');
+                } else {
+                    iconElement.classList.add('rotate-180');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
